@@ -1,2 +1,2 @@
 # Delta
-About The Web Development Journy
+About The Web Development Journy...
