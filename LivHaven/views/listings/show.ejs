@@ -1,0 +1,44 @@
+<% layout('/layouts/boilerplate') -%>
+
+<body style="background-color: #f4e3ce;">
+
+  <div class="container py-5">
+
+    <!-- Listing Card -->
+    <div class="card shadow-sm mx-auto" style="max-width: 700px; border-radius: 12px;">
+      
+      <!-- Image -->
+      <% if (listing.image && listing.image.url) { %>
+        <img src="<%= listing.image.url %>" class="card-img-top" alt="<%= listing.title %>" style="height: 300px; object-fit: cover; border-top-left-radius:12px; border-top-right-radius:12px;">
+      <% } %>
+
+      <!-- Card Body -->
+      <div class="card-body">
+        <h2 class="card-title text-primary"><%= listing.title %></h2>
+        <p class="card-text text-muted"><%= listing.description %></p>
+
+        <ul class="list-group list-group-flush mb-3">
+          <li class="list-group-item px-0">Price: <strong>&#8377; <%= listing.price.toLocaleString("en-IN") %></strong></li>
+          <li class="list-group-item px-0">Location: <%= listing.location %></li>
+          <li class="list-group-item px-0">Country: <%= listing.country %></li>
+          <li class="list-group-item px-0">Created At: <%= listing.createdAt.toLocaleString() %></li>
+        </ul>
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-center gap-3 mt-3">
+          <a href="/listings/<%= listing._id %>/edit" class="btn btn-warning btn-lg rounded-pill shadow-sm px-4">
+            Edit
+          </a>
+          <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="d-inline">
+            <button type="submit" class="btn btn-danger btn-lg rounded-pill shadow-sm px-4">
+              Delete
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</body>

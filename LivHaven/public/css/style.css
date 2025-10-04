@@ -1,0 +1,362 @@
+body{
+    background-color:rgb(244, 227, 206);
+    padding-top: 60px;
+}
+@media (max-width: 992px) {
+  body {
+    padding-top: 90px;
+  }
+}
+
+img{
+    border-radius: 1rem;
+}
+#logo {
+  font-family: "Emilys Candy", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  padding: 0%;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+/* ===== FOOTER BASE ===== */
+footer {
+    width: 95%;
+    background: #0d1b2a; /* Deep navy */
+    color: #ffffff;
+    padding: 15px 20px; /* smaller vertical padding */
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    text-align: center;
+    position: relative;
+    margin-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ===== CONTAINER ===== */
+.f-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* reduced gap */
+}
+
+/* ===== COMPANY NAME ===== */
+.f-info-company {
+    font-size: 16px; /* smaller font */
+    font-weight: 600;
+    color: #e0e1dd;
+}
+
+/* ===== LINKS ===== */
+.f-info-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* reduced gap */
+    font-size: 13px; /* smaller font */
+}
+
+.f-info-links a {
+    text-decoration: none;
+    color: #adb5bd;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.f-info-links a::after {
+    content: "";
+    display: block;
+    height: 2px;
+    width: 0%;
+    background: #00b4d8;
+    transition: width 0.3s ease-in-out;
+    margin-top: 2px;
+}
+
+.f-info-links a:hover {
+    color: #00b4d8;
+}
+
+.f-info-links a:hover::after {
+    width: 100%;
+}
+
+/* ===== SOCIALS ===== */
+.f-info-socials {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* reduced gap */
+}
+
+.f-info-socials a {
+    color: #adb5bd;
+    font-size: 18px; /* smaller icons */
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.f-info-socials a:hover {
+    color: #00b4d8;
+    transform: scale(1.2);
+}
+
+/* ===== COPYRIGHT ===== */
+.f-info-copy span {
+    font-size: 11px; /* smaller text */
+    color: #6c757d;
+    display: block;
+    margin-top: 5px;
+    letter-spacing: 0.5px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .f-info {
+        gap: 8px;
+    }
+    .f-info-links {
+        gap: 8px;
+        font-size: 12px;
+    }
+    .f-info-company {
+        font-size: 14px;
+    }
+    .f-info-socials a {
+        font-size: 16px;
+    }
+}
+
+
+/* Fixed Top Navbar with Glass Effect */
+.glass-navbar {
+  background-color: rgba(182, 220, 250, 0.7); /* semi-transparent */
+  backdrop-filter: blur(10px); /* blur content behind */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  z-index: 1030; /* above content */
+}
+
+/* Optional: Change on Scroll */
+.glass-navbar.scrolled {
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* Adjust body padding so content doesn't hide under navbar */
+body {
+  padding-top: 80px; /* adjust to navbar height */
+}
+
+@media (max-width: 992px) {
+  body {
+    padding-top: 90px;
+  }
+}
+
+.navbar{
+    border-radius: 1rem;
+    margin-top: 1rem;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* Card */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+}
+
+/* Hover Effect */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Title */
+.card-title {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+/* Buttons */
+.btn-primary {
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+}
+
+/* Card Image */
+.card-img-top {
+  object-fit: cover;
+  height: 200px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .card-title {
+    font-size: 1.1rem;
+  }
+  .btn-sm {
+    padding: 0.35rem 0.8rem;
+  }
+  .card-img-top {
+    height: 180px;
+  }
+}
+
+/* Card */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* Form Labels */
+.form-label {
+  font-weight: 600;
+}
+
+/* Inputs & Textarea */
+.form-control {
+  border-radius: 8px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 8px rgba(33, 150, 243, 0.3);
+}
+
+/* Submit Button Hover */
+.btn-success {
+  transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(40, 167, 69, 0.4);
+}
+
+/* Card */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* Form Labels */
+.form-label {
+  font-weight: 600;
+}
+
+/* Inputs & Textarea */
+.form-control {
+  border-radius: 8px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #ffc107; /* warning color */
+  box-shadow: 0 0 8px rgba(255, 193, 7, 0.3);
+}
+
+/* Submit Button Hover */
+.btn-warning {
+  transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 193, 7, 0.4);
+}
+
+/* Card hover effect */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* Card title */
+.card-title {
+  font-weight: 700;
+  font-size: 1.75rem;
+}
+
+/* Card text */
+.card-text {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* List items */
+.list-group-item {
+  border: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Buttons hover */
+.btn-warning, .btn-danger {
+  transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 193, 7, 0.4);
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(220, 53, 69, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card-title {
+    font-size: 1.5rem;
+  }
+
+  .btn-lg {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+  }
+}
+
+#nav-btn{
+  font-family: "Gamja Flower", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: large;
+}
+
+#list-title{
+  font-family: "Delius Swash Caps", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
