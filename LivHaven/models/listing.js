@@ -21,7 +21,7 @@ const imageSchema = new Schema(
 const listingSchema = new Schema(
   {
     title: { type: String, required: true },
-    description: { type: String, required: true },
+    description: { type: String,},
 
     // Image field uses imageSchema
     image: {
@@ -45,9 +45,9 @@ const listingSchema = new Schema(
 
     },
 
-    price: { type: Number, required: true },
-    location: { type: String, required: true },
-    country: { type: String, required: true },
+    price: { type: Number},
+    location: { type: String},
+    country: { type: String},
     createdAt: { type: Date, default: Date.now }
   }
 );

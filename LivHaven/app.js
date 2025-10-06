@@ -14,7 +14,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const ejsmate = require('ejs-mate');
 app.engine('ejs', ejsmate);
+const wrapAsync = require("./utils/wrapAsync.js");
+const ExpressErr = require("./utils/ExpressErr.js");
+const { listingSchema } = require('./schema.js');
+const { request } = require('http');
 
+const validateListing = (req, res, next) => {
+    let {error} = listingSchema.validate(req.body);
+    if (error) {
+        throw new ExpressErr(400 , error);
+    }else{
+    next();
+    }
+};
+
+//connect to mongodb
 
 async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/LivHaven');
@@ -36,50 +50,78 @@ app.get('/', (req, res) => {
 });
 
 //index route to get all listings
-app.get('/listings', async (req, res) => {
+app.get('/listing', wrapAsync(async (req, res) => {
     const alllistings = await Listing.find({});
-    res.render('listings/index.ejs', { listings: alllistings });
+    res.render('listing/index.ejs', { listing: alllistings });
 
-});
-//new route to get the form to create a new listing
-app.get('/listings/new', (req, res) => {
-    res.render('listings/new.ejs');
-});
+}));
+app.get('/listing/new', wrapAsync(async (req, res) => {
+    res.render('listing/new.ejs');
+}));
 
 
 //show route to get a single listing by id
-app.get('/listings/:id', async (req, res) => {
+app.get('/listing/:id', wrapAsync(async (req, res , next) => {
     const { id } = req.params;
     const listing = await Listing.findById(id);
-    res.render('listings/show.ejs', { listing });
-});
+    if (!listing) {
+        return next(new ExpressErr(404, "Listing not found"));
+    }
+    res.render('listing/show.ejs', { listing });
+}));
 
 
 //create route to create a new listing
-app.post('/listings', async (req, res) => {
-    const newlist = new Listing (req.body.listing);
+
+app.post('/listing', validateListing, wrapAsync(async (req, res, next) => {
+    if(!req.body){
+            throw new ExpressErr(400 , "You don't pass right data!");
+    }
+    const newlist = new Listing(req.body.listing);
     await newlist.save();
-    res.redirect("/listings");
-});
+    res.redirect("/listing");
+}));
+
 
 //Edit Route
-app.get("/listings/:id/edit", async (req, res) => {
+app.get("/listing/:id/edit", wrapAsync(async (req, res , next) => {
     const { id } = req.params;
     const listing = await Listing.findById(id);
-    res.render("listings/edit.ejs", { listing });
-});
+    if (!listing) {
+        return next(new ExpressErr(404, "Listing not found"));
+    }
+    if (!req.body || !req.body.listing) {
+    return next(new ExpressErr(400, "You didn't pass the right data!"));
+    }
+    res.render("listing/edit.ejs", { listing });
+}));
 
 //Update Route
-app.put("/listings/:id", async (req, res) => {
-  const { id } = req.params;
-  const data = req.body.listing;
-  await Listing.findByIdAndUpdate(id, {...data});
-  res.redirect("/listings");
-});
+app.put("/listing/:id", validateListing, wrapAsync(async (req, res , next) => {
+    if(!req.body){
+            throw new ExpressErr(400 , "You don't pass right data!");
+    }
+    const { id } = req.params;
+    const data = req.body.listing;
+    await Listing.findByIdAndUpdate(id, {...data});
+    res.redirect("/listing");
+}));
 
 //delete route to delete a listing by id
-app.delete("/listings/:id", async (req, res) => {
+app.delete("/listing/:id", wrapAsync(async (req, res) => {
     const { id } = req.params;
     await Listing.findByIdAndDelete(id);
-    res.redirect("/listings");
+    res.redirect("/listing");
+}));
+
+app.use("/" , (req , res , next) => {
+    next(new ExpressErr(404 , "Page Not Found!:)"));
+});
+
+// Central error handler
+app.use((err, req, res, next) => {
+  console.error(err.status , err.message);
+  const status = err.status;
+  const message = err.message;
+  res.status(status).render("error.ejs", { status, message});
 });
