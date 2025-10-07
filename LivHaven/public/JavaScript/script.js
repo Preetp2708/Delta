@@ -5,7 +5,6 @@
   // Fetch all the forms we want to apply custom Bootstrap validation styles to
   const forms = document.querySelectorAll('.needs-validation')
 
-  // Loop over them and prevent submission
   Array.from(forms).forEach(form => {
     form.addEventListener('submit', event => {
       if (!form.checkValidity()) {
@@ -15,5 +14,19 @@
 
       form.classList.add('was-validated')
     }, false)
+  })
+
+  // -------------------------------
+  // Card click navigation
+  // -------------------------------
+  document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.listing-card')
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.dataset.id
+        window.location.href = `/listing/${id}`
+      })
+    })
   })
 })()
