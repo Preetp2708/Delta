@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 1000;
+const port = 3000;
 const mongoose = require('mongoose');
 const Listing = require('./models/listing.js');
 const path = require('path');
@@ -87,12 +87,6 @@ app.post('/listing', validateListing, wrapAsync(async (req, res, next) => {
 app.get("/listing/:id/edit", wrapAsync(async (req, res , next) => {
     const { id } = req.params;
     const listing = await Listing.findById(id);
-    if (!listing) {
-        return next(new ExpressErr(404, "Listing not found"));
-    }
-    if (!req.body || !req.body.listing) {
-    return next(new ExpressErr(400, "You didn't pass the right data!"));
-    }
     res.render("listing/edit.ejs", { listing });
 }));
 
