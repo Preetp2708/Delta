@@ -149,7 +149,7 @@ app.delete("/listing/:id/reviews/:reviewId", wrapAsync(async (req, res, next) =>
 }));
 
 // 404 Not Found Handler
-app.use((req, res, next) => {
+app.use("/",(req, res, next) => {
     next(new ExpressErr(404, "Page Not Found! :)"));
 });
 
