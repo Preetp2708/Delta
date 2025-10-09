@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Review = require('./review.js');
 
 // Define a constant for the default image URL
 const DEFAULT_IMAGE_URL = "https://cf.bstatic.com/xdata/images/hotel/max1024x768/656411102.jpg?k=7e1185b2b5cee354505b239d9266d7b4e14922dcc32f66404c06554bacdbac1a&o=";
@@ -48,9 +49,21 @@ const listingSchema = new Schema(
     price: { type: Number},
     location: { type: String},
     country: { type: String},
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now },
+    reviews: [{
+      type : Schema.Types.ObjectId,
+      ref: "Review" 
+    }],
   }
 );
+
+listingSchema.post("findOneAndDelete", async (doc) => {
+  if (doc) {
+    await Review.deleteMany({
+      _id: { $in: doc.reviews }
+    });
+  }
+});
 
 // Use existing compiled model
 const Listing =
