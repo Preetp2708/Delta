@@ -6,8 +6,10 @@ const path = require('path');
 const methodOverride = require('method-override');
 const ejsmate = require('ejs-mate');
 const ExpressErr = require("./utils/ExpressErr.js");
+const session = require('express-session');
 const reviewRoutes = require('./routes/review.js');
 const listingsRoutes = require('./routes/listing.js');
+const flash = require('connect-flash');
 
 // ────────────── Middleware Setup ──────────────
 app.engine('ejs', ejsmate);
@@ -34,12 +36,34 @@ app.listen(port, () => {
   console.log(`🚀 Server running on port ${port}`);
 });
 
-// ────────────── Routes ──────────────
+// ────────────── Session Configuration ──────────────
+const sessionOptions = {
+    secret: 'thisshouldbeabettersecret',
+    resave: false,
+    saveUninitialized: true,
+    cookie : {
+        exprires: Date.now() + 1000 * 60 * 60 * 24 * 7, // One week from now
+        maxAge: 1000 * 60 * 60 * 24 * 7, // One week
+        httpOnly: true,
+      },
+};
 
 // Root
 app.get('/', (req, res) => {
   res.send('Hello! This Is Root!');
 });
+
+app.use(session(sessionOptions));
+app.use(flash());
+
+// Flash Middleware
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+});
+
+// ────────────── Routes ──────────────
 
 // Use listing routes
 app.use('/listing', listingsRoutes);
@@ -49,7 +73,7 @@ app.use('/listing/:id/reviews', reviewRoutes);
 
 
 // 404 Not Found Handler
-app.use((req, res, next) => {
+app.all('/', (req, res, next) => {
     next(new ExpressErr(404, "Page Not Found! :)"));
 });
 
