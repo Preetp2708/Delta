@@ -1,0 +1,44 @@
+<% layout('/layouts/boilerplate') -%>
+<body style="background-color: #f4e3ce;">
+    <div class="container py-5">
+    
+        <!-- Page Header -->
+        <div class="text-center mb-4">
+        <h1 class="h3 text-success fw-bold">Login</h1>
+        <p class="text-muted">Access your account by entering your credentials below.</p>
+        </div>
+    
+        <!-- Form Card -->
+        <div class="card shadow-sm mx-auto" style="max-width: 500px; border-radius: 12px;">
+        <div class="card-body p-4">
+    
+            <form action="/login" method="POST" class="row g-3 needs-validation" novalidate>
+    
+            <!-- Username -->
+            <div class="col-12">
+                <label for="username" class="form-label fw-semibold">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required>
+                <div class="valid-feedback">Username looks good!</div>
+                <div class="invalid-feedback">Please enter your username!</div>
+            </div>
+    
+            <!-- Password -->
+            <div class="col-12">
+                <label for="password" class="form-label fw-semibold">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                <div class="valid-feedback">Password looks good!</div>
+                <div class="invalid-feedback">Please enter your password!</div>
+            </div>
+    
+            <!-- Submit Button -->
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-success px-4 py-2 fw-semibold">Login</button>
+            </div>
+    
+            </form>
+    
+        </div>
+        </div>
+    
+    </div>
+</body>

@@ -9,7 +9,11 @@ const ExpressErr = require("./utils/ExpressErr.js");
 const session = require('express-session');
 const reviewRoutes = require('./routes/review.js');
 const listingsRoutes = require('./routes/listing.js');
+const userRoutes = require('./routes/user.js');
 const flash = require('connect-flash');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user.js');
 
 // ────────────── Middleware Setup ──────────────
 app.engine('ejs', ejsmate);
@@ -42,7 +46,8 @@ const sessionOptions = {
     resave: false,
     saveUninitialized: true,
     cookie : {
-        exprires: Date.now() + 1000 * 60 * 60 * 24 * 7, // One week from now
+        // expires should be a Date object; set to one week from now
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // One week from now
         maxAge: 1000 * 60 * 60 * 24 * 7, // One week
         httpOnly: true,
       },
@@ -56,11 +61,27 @@ app.get('/', (req, res) => {
 app.use(session(sessionOptions));
 app.use(flash());
 
+// ────────────── Passport Configuration ──────────────
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // Flash Middleware
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
+  // Make the authenticated user available in all views as `currentUser`
+  res.locals.currentUser = req.user;
     next();
+});
+
+app.get('/fakeUser', async (req, res) => {
+    const user = new User({ email: 'fakeuser@example.com' , username: 'fakeuser' });
+    const newUser = await User.register(user, 'password123');
+    res.send(newUser);
 });
 
 // ────────────── Routes ──────────────
@@ -71,6 +92,8 @@ app.use('/listing', listingsRoutes);
 // Review Routes
 app.use('/listing/:id/reviews', reviewRoutes);
 
+// User Routes
+app.use('/', userRoutes);
 
 // 404 Not Found Handler
 app.all('/', (req, res, next) => {

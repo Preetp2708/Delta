@@ -29,9 +29,13 @@
           <li class="list-group-item px-0 bg-transparent border-0">
             🕒 Created At: <%= listing.createdAt.toLocaleString() %>
           </li>
+          <li class="list-group-item px-0 bg-transparent border-0">
+            🧑‍💼 Owner: <%= listing.owner ? listing.owner.username : 'Unknown' %>
+          </li>
         </ul>
 
-        <!-- Action Buttons -->
+        <% if(currentUser && currentUser._id.equals(listing.owner._id)) {%>
+          <!-- Action Buttons -->
         <div class="d-flex justify-content-center gap-3 mt-4">
           <a href="/listing/<%= listing._id %>/edit" class="btn btn-warning btn-lg rounded-pill shadow-sm px-4">
             ✏️ Edit
@@ -42,6 +46,7 @@
             </button>
           </form>
         </div>
+          <% } %>
       </div>
     </div>
 

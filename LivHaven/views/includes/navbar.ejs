@@ -7,17 +7,45 @@
       LivHaven
     </a>
 
-    <!-- Middle Welcome Button -->
+    <!-- Middle Welcome / Flash Button -->
     <div class="mx-auto d-none d-lg-block">
-      <button type="button" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold shadow-sm" id="nav-btn">
-        Welcome to LivHaven!
-      </button>
+      <% if (success && success.length > 0) { %>
+        <button type="button" class="btn btn-success rounded-pill px-4 py-2 fw-semibold shadow-sm" id="nav-btn">
+          <%= success.join('<br>') %>
+        </button>
+      <% } else if (error && error.length > 0) { %>
+        <button type="button" class="btn btn-danger rounded-pill px-4 py-2 fw-semibold shadow-sm" id="nav-btn">
+          <%= error.join('<br>') %>
+        </button>
+      <% } else { %>
+        <button type="button" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold shadow-sm" id="nav-btn">
+          Welcome to LivHaven!
+        </button>
+      <% } %>
     </div>
 
     <!-- Right Links -->
     <div class="d-flex align-items-center">
-      <a href="/about" class="btn btn-outline-primary me-2 d-none d-md-inline-block">About Us</a>
-      <a href="/contact" class="btn btn-outline-primary d-none d-md-inline-block">Contact</a>
+      <% if (!currentUser) { %>
+        <a href="/signup" class="btn btn-outline-primary me-2 d-none d-md-inline-block">Sign Up</a>
+        <a href="/login" class="btn btn-outline-primary d-none d-md-inline-block">Login</a>
+      <% } else { %>
+        <div class="d-flex align-items-center d-md-none">
+          <span class="me-2 text-secondary">Hello, <strong><%= currentUser.username %></strong></span>
+        </div>
+
+        <div class="dropdown d-none d-md-block">
+          <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-user me-2"></i>
+            <span class="d-none d-lg-inline"><%= currentUser.username %></span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 shadow-sm" aria-labelledby="userDropdown">
+            <%- include('../includes/userCard.ejs') %>
+          </div>
+        </div>
+
+        <a href="/logout" class="btn btn-outline-danger d-md-none ms-2">Logout</a>
+      <% } %>
     </div>
 
   </div>

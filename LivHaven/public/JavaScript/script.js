@@ -30,3 +30,15 @@
     })
   })
 })()
+
+document.addEventListener("DOMContentLoaded", () => {
+  const navBtn = document.getElementById("nav-btn");
+  if (!navBtn) return;
+
+  if (navBtn.classList.contains("btn-success") || navBtn.classList.contains("btn-danger")) {
+    setTimeout(() => {
+      navBtn.className = "btn btn-primary rounded-pill px-4 py-2 fw-semibold shadow-sm";
+      navBtn.textContent = "Welcome to LivHaven!";
+    }, 4000);
+  }
+});

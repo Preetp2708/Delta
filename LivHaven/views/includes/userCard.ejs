@@ -1,0 +1,20 @@
+<div class="user-card shadow-sm">
+  <div class="user-header">
+    <div class="avatar">
+      <%= (currentUser && currentUser.username) ? currentUser.username.charAt(0).toUpperCase() : '?' %>
+    </div>
+    <div class="user-info">
+      <div class="username"><%= currentUser ? currentUser.username : 'Guest' %></div>
+      <% if (currentUser && currentUser.email) { %>
+        <div class="email"><%= currentUser.email %></div>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="user-actions">
+    <a href="/listing" class="btn btn-outline">My Listings</a>
+    <form action="/logout" method="get">
+      <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+  </div>
+</div>
