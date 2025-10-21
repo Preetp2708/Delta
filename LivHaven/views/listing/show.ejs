@@ -50,69 +50,95 @@
       </div>
     </div>
 
-    <!-- Review Form -->
-     <% if(currentUser) { %>
-    <div class="card shadow-sm mx-auto p-4 border-0" style="max-width: 500px; border-radius: 16px;">
-      <h5 class="text-primary fw-bold mb-3 text-center">Leave a Review</h5>
-      <form action="/listing/<%= listing._id %>/reviews" method="POST">
+   <!-- Review Form -->
+<% if(currentUser) { %>
+  <div class="card shadow-sm mx-auto p-4 border-0" style="max-width: 500px; border-radius: 16px;">
+    <h5 class="text-primary fw-bold mb-3 text-center">✨ Leave a Review</h5>
+    <form action="/listing/<%= listing._id %>/reviews" method="POST">
 
-        <!-- Rating Slider -->
-        <div class="d-flex align-items-center mb-3">
-          <label for="reviewRating" class="me-3 mb-0 fw-semibold">Rating:</label>
-          <input 
-            type="range" 
-            class="form-range flex-grow-1" 
-            id="reviewRating" 
-            name="review[rating]" 
-            min="1" 
-            max="5" 
-            step="1" 
-            value="3"
-            oninput="document.getElementById('ratingValue').innerText = this.value" 
-            style="height: 4px;">
-          <span class="ms-2 fw-bold text-primary" id="ratingValue">3</span>
-        </div>
+      <!-- Rating (Starability) -->
+      <div class="mb-3 text-center">
+        <fieldset class="starability-slot mx-auto">
+          <legend class="visually-hidden">Your rating for this listing:</legend>
 
-        <!-- Comment Box -->
-        <textarea 
-          class="form-control mb-3 shadow-sm" 
-          id="reviewComment" 
-          name="review[comment]" 
-          rows="3" 
-          placeholder="Write your review..." 
-          required></textarea>
-        <!-- Submit Button -->
-        <div class="text-end">
-          <button type="submit" class="btn btn-success btn-sm rounded-pill px-4 shadow-sm">
-            ✅ Submit
-          </button>
-        </div>
-      </form>
-    </div>
-    <% } %>
-    <hr>
-    <h4 class="text-primary fw-bold mb-4 text-center">Reviews</h4>
-    <div class="row g-4 justify-content-center">
-      <% if (listing.reviews && listing.reviews.length > 0) { %>
-        <% listing.reviews.forEach(review => { %>
-          <div class="col-md-6">
-            <div class="card shadow-sm h-100 border-0" style="border-radius: 12px;">
-              <div class="card-body">
-                <h5 class="card-title text-primary fw-bold mb-2">Rating: <span class="text-warning"><i class="fa-regular fa-star"></i> <%= review.rating %></span></h5>
-                <p class="card-subtitle mb-2 text-muted">By: <%= review.author.username ? review.author.username : 'Unknown' %></p>
-                <p class="card-text text-muted"><%= review.comment %></p>
-                <form action="/listing/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST" class="d-inline">
-                  <button type="submit" class="btn btn-danger btn-sm rounded-pill px-3 shadow-sm">
-                    🗑️ Delete
-                  </button>
-                </form>
-              </div>
-            </div>
+          <input type="radio" id="no-rate" class="input-no-rate"
+                 name="review[rating]" value="0" checked aria-label="No rating." />
+
+          <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+          <label for="first-rate1" title="Terrible">1 star</label>
+
+          <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+          <label for="first-rate2" title="Not good">2 stars</label>
+
+          <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+          <label for="first-rate3" title="Average">3 stars</label>
+
+          <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+          <label for="first-rate4" title="Very good">4 stars</label>
+
+          <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+          <label for="first-rate5" title="Amazing">5 stars</label>
+        </fieldset>
+      </div>
+
+      <!-- Comment Box -->
+      <textarea 
+        class="form-control mb-3 shadow-sm"
+        id="reviewComment"
+        name="review[comment]"
+        rows="3"
+        placeholder="Write your review..."
+        required></textarea>
+
+      <!-- Submit Button -->
+      <div class="text-end">
+        <button type="submit" class="btn btn-success btn-sm rounded-pill px-4 shadow-sm">
+          ✅ Submit
+        </button>
+      </div>
+    </form>
+  </div>
+<% } %>
+
+<hr>
+
+<!-- Reviews Section -->
+<h4 class="text-primary fw-bold mb-4 text-center">⭐ Reviews</h4>
+<div class="row g-4 justify-content-center">
+  <% if (listing.reviews && listing.reviews.length > 0) { %>
+    <% listing.reviews.forEach(review => { %>
+      <div class="col-md-6">
+        <div class="card shadow-sm h-100 border-0" style="border-radius: 12px;">
+          <div class="card-body">
+
+            <!-- Display rating (Starability read-only) -->
+            <p class="starability-result mb-2" data-rating="<%= review.rating %>">
+              Rated: <%= review.rating %> star<% if(review.rating > 1) { %>s<% } %>
+            </p>
+
+            <!-- Review details -->
+            <p class="card-subtitle mb-2 text-muted">
+              By: <%= review.author.username ? review.author.username : 'Unknown' %>
+            </p>
+            <p class="card-text text-muted"><%= review.comment %></p>
+
+            <!-- Delete Button -->
+            <form 
+              action="/listing/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+              method="POST"
+              class="d-inline">
+              <button type="submit" class="btn btn-danger btn-sm rounded-pill px-3 shadow-sm">
+                🗑️ Delete
+              </button>
+            </form>
           </div>
-        <% }); %>
-      <% } else { %>
-        <p class="text-muted">No reviews yet.</p>
-      <% } %>
+        </div>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <p class="text-muted text-center">No reviews yet.</p>
+  <% } %>
+</div>
     </div>
   </div>
 </body>
