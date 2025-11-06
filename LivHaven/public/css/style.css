@@ -106,55 +106,134 @@ footer {
 .form-control:focus { box-shadow: 0 0 8px rgba(33,150,243,0.18); border-color: #2196f3; }
 
 
-/* ----------------------------
-   Navbar & header
-   ---------------------------- */
+/* =============================
+   NAVBAR & RESPONSIVENESS
+   ============================= */
 .glass-navbar {
-  position: fixed; top: 0; left: 50%; transform: translateX(-50%);
-  width: 94%; box-sizing: border-box;
-  /* enforce a fixed height so the navbar does not change size when content changes */
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 94%;
   height: var(--navbar-height);
-  padding: 0 1rem; border-radius:1rem;
-  background-color: rgba(182,220,250,0.7); backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08); z-index:1030;
+  background-color: rgba(182, 220, 250, 0.7);
+  backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  z-index: 1030;
 }
-.glass-navbar.scrolled { background-color: rgba(255,255,255,0.92); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
 
-.navbar-brand { font-family: "Emilys Candy", cursive; font-size:1.55rem; color:var(--primary) !important; display:flex; gap:6px; align-items:center; }
+.navbar-brand {
+  font-family: "Emilys Candy", cursive;
+  font-size: 1.55rem;
+  color: var(--primary) !important;
+}
 
-/* Ensure the navbar's inner container fills the navbar height and centers children vertically. Prevent wrapping. */
-.glass-navbar .container-fluid { height: 100%; display:flex; align-items:center; gap:10px; flex-wrap:nowrap; }
+.navbar-toggler {
+  border: none;
+  background: none;
+  font-size: 1.25rem;
+}
 
-/* Allow brand and right-side actions to keep their intrinsic size but allow the center search to shrink if needed. */
-.glass-navbar .navbar-brand { flex: 0 0 auto; }
-.glass-navbar .country-search-container { flex: 1 1 320px; min-width:160px; max-width:520px; }
-.glass-navbar .d-flex.align-items-center { flex: 0 1 auto; }
+/* Collapse container overrides */
+#navbarCollapse {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+}
 
-/* compact search container (center of navbar) */
-.country-search-container { display:flex; align-items:center; gap:10px; background:#fff; border-radius:50px; padding:6px 10px; box-shadow:0 2px 8px rgba(0,0,0,0.06); width:100%; max-width:90%; margin:0 auto; transition: box-shadow .18s ease, transform .18s ease; }
-.country-search-container input { border:none; outline:none; flex:1; padding:6px 10px; border-radius:50px; font-family:Inter, sans-serif; transition: box-shadow .12s ease; }
-.country-search-container input::placeholder{ color:#9ca3af; }
-.country-search-container:focus-within { box-shadow: 0 8px 24px rgba(13,110,253,0.08); transform: translateY(-2px); }
+@media (min-width: 992px) {
+  #navbarCollapse {
+    background: transparent;
+    padding: 0;
+  }
+}
 
-/* nav button: explicit transition to ensure smooth hover/active animation */
-#nav-btn { background: linear-gradient(135deg,#0d6efd,#0b5ed7); color:#fff; border-radius:50px; padding:6px 14px; box-shadow:0 2px 6px rgba(13,110,253,0.2); transition: transform .16s ease, box-shadow .16s ease; }
-#nav-btn:hover { transform:translateY(-2px); }
+/* Country search container */
+.country-search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border-radius: 50px;
+  padding: 6px 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  transition: box-shadow .18s ease, transform .18s ease;
+}
 
-@media (max-width:992px) { .country-search-container { width:90%; margin: 0 auto; } }
+.country-search-container input {
+  border: none;
+  outline: none;
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 50px;
+}
 
+.country-search-container:focus-within {
+  box-shadow: 0 8px 24px rgba(13, 110, 253, 0.08);
+  transform: translateY(-2px);
+}
 
-.form-check-reverse { margin-bottom: 1rem; }
+#nav-btn {
+  background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+  color: #fff;
+  border-radius: 50px;
+  padding: 6px 14px;
+  box-shadow: 0 2px 6px rgba(13, 110, 253, 0.2);
+  transition: transform .16s ease, box-shadow .16s ease;
+}
 
-/* Add Listing CTA (semantic class) */
+#nav-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Collapsible tweaks */
+@media (max-width: 991.98px) {
+  .glass-navbar {
+    height: auto;
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-collapse {
+    text-align: center;
+  }
+
+  .country-search-container {
+    max-width: 100%;
+  }
+
+  .btn-add-listing {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+}
+
+/* Add listing button styling */
 .btn-add-listing {
-  font-family: "Gamja Flower", sans-serif; font-size: .98rem;
-  color:#fff; background:linear-gradient(135deg,#198754,#16a34a); border:none;
-  padding:8px 16px; display:inline-flex; align-items:center; gap:.5rem;
-  box-shadow:0 2px 6px rgba(25,135,84,0.18);
+  font-family: "Gamja Flower", sans-serif;
+  font-size: .98rem;
+  color: #fff;
+  background: linear-gradient(135deg, #198754, #16a34a);
+  border: none;
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  box-shadow: 0 2px 6px rgba(25, 135, 84, 0.18);
+  border-radius: 50px;
 }
-.btn-add-listing:hover, .btn-add-listing:focus { background:linear-gradient(135deg,#16a34a,#13803d); transform:translateY(-2px); box-shadow:0 6px 18px rgba(16,185,129,0.16); }
-.btn-add-listing:active { transform:translateY(0); }
 
+.btn-add-listing:hover {
+  background: linear-gradient(135deg, #16a34a, #13803d);
+  transform: translateY(-2px);
+}
+
+/* General small-device adjustments */
+@media (max-width: 576px) {
+  .navbar-brand { font-size: 1.35rem; }
+  #nav-btn { font-size: 0.9rem; padding: 5px 10px; }
+}
 
 /* ----------------------------
    Listing grid / cards
