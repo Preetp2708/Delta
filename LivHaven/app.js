@@ -46,7 +46,7 @@ store.on('error', e => console.log('SESSION STORE ERROR', e));
 
 const sessionOptions = {
   store,
-  secret: 'thisshouldbeabettersecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
