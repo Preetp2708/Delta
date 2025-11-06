@@ -6,22 +6,27 @@
       <span class="material-symbols-outlined me-1">family_home</span>
       LivHaven
     </a>
+  <a href="/listing" class="text-secondary ms-2 align-middle">Explore</a>
 
     <!-- Middle Welcome / Flash Button -->
     <div class="mx-auto d-none d-lg-block">
-      <% if (success && success.length > 0) { %>
-        <button type="button" class="btn btn-success rounded-pill px-4 py-2 fw-semibold shadow-sm" id="nav-btn">
-          <%= success.join('<br>') %>
+      <!-- Always render the search container here. Flash messages are shown separately via the flash partial. -->
+      <div class="country-search-container">
+        <input
+          type="text"
+          id="country-input"
+          class="form-control rounded-pill px-3 py-2"
+          placeholder="Enter your country..."
+        />
+        <button
+          type="button"
+          class="btn btn-primary rounded-pill px-4 py-2 fw-semibold shadow-sm"
+          id="nav-btn"
+        >
+          LivHaven
+          <i class="fa-solid fa-magnifying-glass-location"></i>
         </button>
-      <% } else if (error && error.length > 0) { %>
-        <button type="button" class="btn btn-danger rounded-pill px-4 py-2 fw-semibold shadow-sm" id="nav-btn">
-          <%= error.join('<br>') %>
-        </button>
-      <% } else { %>
-        <button type="button" class="btn btn-primary rounded-pill px-4 py-2 fw-semibold shadow-sm" id="nav-btn">
-          Welcome to LivHaven!
-        </button>
-      <% } %>
+      </div>
     </div>
 
     <!-- Right Links -->
@@ -30,12 +35,19 @@
         <a href="/signup" class="btn btn-outline-primary me-2 d-none d-md-inline-block">Sign Up</a>
         <a href="/login" class="btn btn-outline-primary d-none d-md-inline-block">Login</a>
       <% } else { %>
+        <!-- Add listing button: semantic class for clear styling -->
+        <form action="/listing/new" method="GET" class="add-listing-form d-inline">
+          <button type="submit" class="btn btn-add-listing rounded-pill">
+            <i class="fa-solid fa-plus me-2" aria-hidden="true"></i>
+            LivHaven Your Home
+          </button>
+        </form>
         <div class="d-flex align-items-center d-md-none">
           <span class="me-2 text-secondary">Hello, <strong><%= currentUser.username %></strong></span>
         </div>
-
         <div class="dropdown d-none d-md-block">
-          <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center"
+            type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa-solid fa-user me-2"></i>
             <span class="d-none d-lg-inline"><%= currentUser.username %></span>
           </button>
@@ -43,7 +55,6 @@
             <%- include('../includes/userCard.ejs') %>
           </div>
         </div>
-
         <a href="/logout" class="btn btn-outline-danger d-md-none ms-2">Logout</a>
       <% } %>
     </div>

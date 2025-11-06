@@ -31,14 +31,14 @@ app.use(methodOverride('_method'));
 
 // MongoDB Connection
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/LivHaven');
+  await mongoose.connect(process.env.ATLAS_DB_USER);
 }
 main().then(() => console.log('✅ Connected to MongoDB'))
 .catch(err => console.log(err));
 
 // Session Store (reuse existing connection)
 const store = MongoStore.create({
-  client: mongoose.connection.getClient(),
+  mongoUrl: process.env.ATLAS_DB_USER,
   touchAfter: 24 * 3600,
 });
 

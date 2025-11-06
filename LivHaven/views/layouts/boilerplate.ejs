@@ -12,10 +12,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&family=Emilys+Candy&family=Gamja+Flower&display=swap" rel="stylesheet">
     <link href="/css/rating.css" rel="stylesheet">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.js"></script>
+
 </head>
 <body>
     
     <%- include("../includes/navbar.ejs") %>
+    <!-- Flash messages (success / error) shown under the navbar for visibility -->
+    <div class="mt-5">
+      <%- include('../includes/flash.ejs') %>
+    </div>
+
         <%- body %>
     <%- include("../includes/footer.ejs") %>
     <script src="/JavaScript/script.js"></script>

@@ -1,4 +1,9 @@
 <% layout('/layouts/boilerplate') -%>
+<script>
+  const mapToken = '<%= process.env.MAP_TOKEN %>';
+  const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
+  const locationName = '<%= listing.location %>';
+</script>
 
 <body style="background-color: #f4e3ce; font-family: 'Inter', sans-serif;">
   <div class="container py-5">
@@ -139,6 +144,11 @@
     <p class="text-muted text-center">No reviews yet.</p>
   <% } %>
 </div>
+<hr>
+<!-- Map Section -->
+<h4 class="text-primary fw-bold mb-4 text-center">📍 Location Map</h4>
+<div id="map"></div>
+<script src="/JavaScript/map.js"></script>
     </div>
   </div>
 </body>
