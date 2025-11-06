@@ -39,7 +39,7 @@
           </li>
         </ul>
 
-        <% if(currentUser && currentUser._id.equals(listing.owner._id)) {%>
+<% if (currentUser && listing.owner && currentUser._id.equals(listing.owner._id)) { %>
           <!-- Action Buttons -->
         <div class="d-flex justify-content-center gap-3 mt-4">
           <a href="/listing/<%= listing._id %>/edit" class="btn btn-warning btn-lg rounded-pill shadow-sm px-4">
