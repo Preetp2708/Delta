@@ -1,37 +1,41 @@
-// Centralized initialization for page behaviors
-// Each feature is implemented in a small init* function and invoked on DOMContentLoaded
+// LivHaven Frontend Behaviors - Responsive Ready
+
+document.addEventListener('DOMContentLoaded', () => {
+  initFormValidation();
+  initCardNavigation();
+  initNavBtnAnimation();
+  initFilters();
+  initPriceToggle();
+  initCountrySearch();
+});
 
 // ===============================
-// Form validation
+// Form Validation
 // ===============================
 function initFormValidation() {
-  'use strict';
   const forms = document.querySelectorAll('.needs-validation');
-  Array.from(forms).forEach(form => {
+  forms.forEach(form => {
     form.addEventListener('submit', event => {
       if (!form.checkValidity()) {
         event.preventDefault();
         event.stopPropagation();
       }
       form.classList.add('was-validated');
-    }, false);
+    });
   });
 }
-
 
 // ===============================
 // Card click navigation
 // ===============================
 function initCardNavigation() {
-  const cards = document.querySelectorAll('.listing-card');
-  cards.forEach(card => {
+  document.querySelectorAll('.listing-card').forEach(card => {
     card.addEventListener('click', () => {
       const id = card.dataset.id;
       if (id) window.location.href = `/listing/${id}`;
     });
   });
 }
-
 
 // ===============================
 // Navbar Button Message Animation
@@ -42,28 +46,21 @@ function initNavBtnAnimation() {
   const hasFlash = document.querySelectorAll('.alert').length > 0;
   if (!hasFlash) {
     setTimeout(() => {
-      navBtn.className = 'btn btn-primary rounded-pill px-4 py-2 fw-semibold shadow-sm';
+      navBtn.classList.add('fw-semibold');
       navBtn.innerHTML = `Welcome to LivHaven! <i class="fa-solid fa-magnifying-glass-location"></i>`;
     }, 4000);
   }
 }
 
-
 // ===============================
-// Category Filter Functionality
+// Category Filter
 // ===============================
 function initFilters() {
   const filters = document.querySelectorAll('.filter');
   const cards = document.querySelectorAll('.listing-card');
 
   const normalize = text =>
-    (text || '')
-      .toString()
-      .trim()
-      .toLowerCase()
-      .replace(/[\s_]+/g, '-')
-      .replace(/[^\w-]/g, '');
-
+    (text || '').toLowerCase().trim().replace(/[\s_]+/g, '-').replace(/[^\w-]/g, '');
   const normalizeBare = text => normalize(text).replace(/[-_]+/g, '');
 
   const applyFilter = category => {
@@ -90,7 +87,6 @@ function initFilters() {
       filters.forEach(f => f.classList.remove('active'));
       filter.classList.add('active');
       const category = filter.dataset.category || filter.textContent.trim();
-      console.debug('[filter] clicked', { category, normalized: normalize(category), normalizedBare: normalizeBare(category) });
       applyFilter(category);
     });
   });
@@ -98,7 +94,6 @@ function initFilters() {
   const active = document.querySelector('.filter.active');
   applyFilter(active ? active.dataset.category || '' : '');
 }
-
 
 // ===============================
 // Price Toggle
@@ -108,23 +103,21 @@ function initPriceToggle() {
   if (!priceSwitch) return;
 
   priceSwitch.addEventListener('change', () => {
-    const titles = document.querySelectorAll('.list-title');
-    titles.forEach(title => {
-      const baseTitle = title.getAttribute('data-base-title') || title.textContent.split(' - ₹')[0];
+    document.querySelectorAll('.list-title').forEach(title => {
+      const base = title.getAttribute('data-base-title') || title.textContent.split(' - ₹')[0];
       const price = title.getAttribute('data-price') || '';
       if (priceSwitch.checked && price) {
-        title.textContent = `${baseTitle} - ₹ ${price}`;
+        title.textContent = `${base} - ₹ ${price}`;
       } else {
-        title.textContent = baseTitle;
+        title.textContent = base;
       }
-      title.setAttribute('data-base-title', baseTitle);
+      title.setAttribute('data-base-title', base);
     });
   });
 }
 
-
 // ===============================
-// Country Search (center navbar)
+// Country Search (in navbar collapse)
 // ===============================
 function initCountrySearch() {
   const navBtn = document.getElementById('nav-btn');
@@ -139,7 +132,6 @@ function initCountrySearch() {
       countryInput.focus();
       return;
     }
-    // Replace with real search logic when available
     alert(`Searching listings in ${country}...`);
   });
 
@@ -147,14 +139,3 @@ function initCountrySearch() {
     if (e.key === 'Enter') navBtn.click();
   });
 }
-
-
-// Single entry point
-document.addEventListener('DOMContentLoaded', () => {
-  initFormValidation();
-  initCardNavigation();
-  initNavBtnAnimation();
-  initFilters();
-  initPriceToggle();
-  initCountrySearch();
-});
